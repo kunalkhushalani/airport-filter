@@ -1,0 +1,133 @@
+<div class="w-100 p-2">
+  <div class="p-3 airports-filter-outer-container w-100">
+    <div class="p-4 w-100 airports-filter-inner-container">
+      <h1 class="mb-4">Filter <span>airports</span></h1>
+
+      <!-- Checkbox filters section -->
+      <div class="row m-0 mb-3">
+        <div class="col-7 p-0">
+          <h5>Type</h5>
+          <div class="checkbox-filter">
+            <input
+              type="checkbox"
+              id="small"
+              [checked]="findTypeIndexinFilterArray('SMALL') !== -1"
+              (change)="applyFilters('small')"
+            /><label for="small" class="ml-1 mr-2">Small</label>
+          </div>
+          <div class="checkbox-filter">
+            <input
+              type="checkbox"
+              id="medium"
+              [checked]="findTypeIndexinFilterArray('MEDIUM') !== -1"
+              (change)="applyFilters('medium')"
+            /><label for="medium" class="ml-1 mr-2">Medium</label>
+          </div>
+          <div class="checkbox-filter">
+            <input
+              type="checkbox"
+              id="large"
+              [checked]="findTypeIndexinFilterArray('LARGE') !== -1"
+              (change)="applyFilters('large')"
+            /><label for="large" class="ml-1 mr-2">Large</label>
+          </div>
+          <div class="checkbox-filter">
+            <input
+              type="checkbox"
+              id="heliport"
+              [checked]="findTypeIndexinFilterArray('HELIPORT') !== -1"
+              (change)="applyFilters('heliport')"
+            /><label for="heliport" class="ml-1 mr-2">Heliport</label>
+          </div>
+          <div class="checkbox-filter">
+            <input
+              type="checkbox"
+              id="closed"
+              [checked]="findTypeIndexinFilterArray('CLOSED') !== -1"
+              (change)="applyFilters('closed')"
+            /><label for="closed" class="ml-1 mr-2">Closed</label>
+          </div>
+          <div class="checkbox-filter">
+            <input
+              type="checkbox"
+              id="favorites"
+              [checked]="findTypeIndexinFilterArray('FAVORITES') !== -1"
+              (change)="applyFilters('favorites')"
+            /><label for="favorites" class="ml-1 mr-2">In your favorites</label>
+          </div>
+        </div>
+
+        <!-- Search filter -->
+        <div class="col-5 p-0">
+          <h5>Filter by search</h5>
+          <input type="text" class="w-100 p-0 search-filter" #searchFilter />
+        </div>
+      </div>
+
+      <!-- Airports table -->
+      <div class="airport-table-container w-100 table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>ICAO</th>
+              <th>IATA</th>
+              <th>Elev.</th>
+              <th>Lat.</th>
+              <th>Long.</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let airport of airportsToShow
+                  | sliceAirports: startPageIndex:endPageIndex
+              "
+            >
+              <td>{{ airport.name }}</td>
+              <td>{{ airport.icao }}</td>
+              <td>{{ airport.iata }}</td>
+              <td>{{ airport.elevation }}</td>
+              <td>{{ airport.latitude }}</td>
+              <td>{{ airport.longitude }}</td>
+              <td>{{ airport.type }}</td>
+            </tr>
+            <tr class="text-center w-100" *ngIf="airportsToShow.length === 0">
+              <td colspan="7">No rows to show</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination panel -->
+      <div class="w-100">
+        <div class="row m-0">
+          <div class="col-1 p-0 text-left">
+            <i
+              class="fa fa-arrow-left"
+              [class.navigation-disabled]="startPageIndex <= 0"
+              aria-hidden="true"
+              (click)="navigateToPreviousPage()"
+            ></i>
+          </div>
+          <div class="col-10 text-center">
+            Showing <b>{{ startPageIndex + 1 }}</b
+            >-<b>{{ endPageIndex }}</b> of
+            <b>{{ airportsToShow.length }}</b> results
+          </div>
+          <div class="col-1 p-0 text-right">
+            <i
+              class="fa fa-arrow-right"
+              [class.navigation-disabled]="
+                endPageIndex === airportsToShow.length
+              "
+              aria-hidden="true"
+              (click)="navigateToNextPage()"
+            ></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
