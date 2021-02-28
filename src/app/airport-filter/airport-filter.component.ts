@@ -22,7 +22,7 @@ export class AirportFilterComponent
   @ViewChild('searchFilter') searchFilter: ElementRef;
   public airports: Airport[] = [];
   public airportsToShow: Airport[] = [];
-  public dataChunk: number = 5;
+  public dataChunk: number = 4;
   public filteredAirports: Airport[] = [];
   public filters: string[] = [];
   public searchQuery: string = '';
